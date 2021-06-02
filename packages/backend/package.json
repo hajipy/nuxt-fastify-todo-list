@@ -4,5 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
-  "devDependencies": {}
+  "scripts": {
+    "start": "yarn ts-node src/server.ts"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "fastify": "^3.17.0"
+  }
 }
