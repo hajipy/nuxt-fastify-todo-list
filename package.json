@@ -1,0 +1,12 @@
+{
+  "name": "nuxt-fastify-todo-list",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/backend",
+    "packages/frontend"
+  ],
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  }
+}
