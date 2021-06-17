@@ -1,5 +1,6 @@
 import Fastify, { FastifyInstance } from "fastify";
 import { PrismaClient } from "@prisma/client";
+import { Type, Static } from "@sinclair/typebox";
 
 const server: FastifyInstance = Fastify({ logger: true });
 
@@ -9,8 +10,14 @@ server.get("/", async (request, reply) => {
     return { hello: "world" };
 });
 
+const BodyScheme = Type.Object({
+    title: Type.String(),
+});
+
+type BodyType = Static<typeof BodyScheme>;
+
 server.post<{
-    Body: { title: string; },
+    Body: BodyType,
 }>("/todo", async (request, repay) => {
     console.log(request.body);
 
