@@ -16,9 +16,19 @@ const BodyScheme = Type.Object({
 
 type BodyType = Static<typeof BodyScheme>;
 
+const ResponseSchema = Type.Object({
+    todo: Type.Object({
+        id: Type.Number(),
+        title: Type.String(),
+    }),
+});
+
 const options: RouteShorthandOptions = {
     schema: {
         body: BodyScheme,
+        response: {
+            200: ResponseSchema,
+        },
     },
 };
 
