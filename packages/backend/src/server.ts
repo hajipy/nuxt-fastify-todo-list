@@ -38,7 +38,7 @@ server.post<{
     return newTodo;
 });
 
-const startServer = async () => {
+async function startServer() {
     try {
         await server.listen(3000);
     }
@@ -46,6 +46,6 @@ const startServer = async () => {
         server.log.error(error);
         process.exit(1);
     }
-};
+}
 
 startServer();
