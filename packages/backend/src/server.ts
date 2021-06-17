@@ -26,6 +26,7 @@ const options: RouteShorthandOptions = {
     },
 };
 
+// noinspection JSUnusedLocalSymbols
 server.post<{
     Body: BodyType,
 }>("/todo", options, async (request, reply) => {
