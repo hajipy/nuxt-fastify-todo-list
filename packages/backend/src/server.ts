@@ -6,10 +6,6 @@ const server: FastifyInstance = Fastify({ logger: true });
 
 const prisma = new PrismaClient();
 
-server.get("/", async (request, reply) => {
-    return { hello: "world" };
-});
-
 const BodyScheme = Type.Object({
     title: Type.String(),
 });
