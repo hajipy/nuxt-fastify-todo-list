@@ -17,6 +17,8 @@ const ResponseSchema = Type.Object({
     title: Type.String(),
 });
 
+type ResponseType = Static<typeof ResponseSchema>;
+
 const options: RouteShorthandOptions = {
     schema: {
         body: BodyScheme,
@@ -26,10 +28,9 @@ const options: RouteShorthandOptions = {
     },
 };
 
-// noinspection JSUnusedLocalSymbols
 server.post<{
     Body: BodyType,
-}>("/todo", options, async (request, reply) => {
+}>("/todo", options, async (request): Promise<ResponseType> => {
     return await prisma.todo.create({
         data: {
             title: request.body.title,
