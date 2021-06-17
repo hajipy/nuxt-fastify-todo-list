@@ -39,14 +39,10 @@ server.post<{
     return newTodo;
 });
 
-async function startServer() {
-    try {
-        await server.listen(3000);
-    }
-    catch (error) {
+server.listen(3000)
+    .catch((error) => {
         server.log.error(error);
-        process.exit(1);
-    }
-}
-
-startServer();
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
