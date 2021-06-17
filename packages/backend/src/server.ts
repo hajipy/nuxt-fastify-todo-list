@@ -17,10 +17,8 @@ const BodyScheme = Type.Object({
 type BodyType = Static<typeof BodyScheme>;
 
 const ResponseSchema = Type.Object({
-    todo: Type.Object({
-        id: Type.Number(),
-        title: Type.String(),
-    }),
+    id: Type.Number(),
+    title: Type.String(),
 });
 
 const options: RouteShorthandOptions = {
@@ -43,7 +41,7 @@ server.post<{
         },
     });
 
-    return { todo: newTodo };
+    return newTodo;
 });
 
 const startServer = async () => {
