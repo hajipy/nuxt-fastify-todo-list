@@ -1,4 +1,4 @@
-import Fastify, { FastifyInstance } from "fastify";
+import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { Type, Static } from "@sinclair/typebox";
 
@@ -16,14 +16,20 @@ const BodyScheme = Type.Object({
 
 type BodyType = Static<typeof BodyScheme>;
 
+const options: RouteShorthandOptions = {
+    schema: {
+        body: BodyScheme,
+    },
+};
+
 server.post<{
     Body: BodyType,
-}>("/todo", async (request, repay) => {
+}>("/todo", options, async (request, repay) => {
     console.log(request.body);
 
     const newTodo = await prisma.todo.create({
         data: {
-            title: request.body.title || "new task",
+            title: request.body.title,
         },
     });
 
