@@ -33,8 +33,6 @@ const options: RouteShorthandOptions = {
 server.post<{
     Body: BodyType,
 }>("/todo", options, async (request, repay) => {
-    console.log(request.body);
-
     const newTodo = await prisma.todo.create({
         data: {
             title: request.body.title,
