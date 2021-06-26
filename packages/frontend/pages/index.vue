@@ -1,17 +1,17 @@
 <template>
-    <h1>{{ message }}</h1>
+    <ul>
+        <li v-for="todo in todoList">{{ todo }}</li>
+    </ul>
 </template>
 
 <script lang="ts">
     import Vue from "vue";
 
-    const message: string = "Hello world with TypeScript";
-
     export default Vue.extend({
-        data() {
-            return {
-                message,
-            };
+        computed: {
+            todoList() {
+                return this.$store.state.todoList;
+            },
         },
     });
 </script>
