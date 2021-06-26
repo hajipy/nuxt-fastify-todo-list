@@ -1,7 +1,7 @@
 import { MutationTree } from "vuex";
 
-class State {
-    public todos: Array<{ id: number; title: string; }> = [];
+interface State {
+    todos: Array<{ id: number; title: string; }>;
 }
 
 const mutations: MutationTree<State> = {
@@ -11,6 +11,8 @@ const mutations: MutationTree<State> = {
 };
 
 export default {
-    state: new State(),
+    state: (): State => ({
+        todos: [],
+    }),
     mutations,
 };
