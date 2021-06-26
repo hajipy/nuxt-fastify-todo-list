@@ -12,7 +12,6 @@ const TodoObjectSchema = Type.Object({
 });
 
 const TodoGetResponseSchema = Type.Array(TodoObjectSchema);
-type TodoGetResponseType = Static<typeof TodoGetResponseSchema>;
 server.get(
     "/todo",
     {
@@ -22,7 +21,7 @@ server.get(
             },
         },
     },
-    (): Promise<TodoGetResponseType> => {
+    (): Promise<Static<typeof TodoGetResponseSchema>> => {
         return prisma.todo.findMany({
             orderBy: [
                 { id: "asc" },
@@ -34,10 +33,8 @@ server.get(
 const TodoPostBodyScheme = Type.Object({
     title: Type.String(),
 });
-type TodoPostBodyType = Static<typeof TodoPostBodyScheme>;
-type TodoPostResponseType = Static<typeof TodoObjectSchema>;
 server.post<{
-    Body: TodoPostBodyType,
+    Body: Static<typeof TodoPostBodyScheme>,
 }>(
     "/todo",
     {
@@ -48,7 +45,7 @@ server.post<{
             },
         },
     },
-    (request): Promise<TodoPostResponseType> => {
+    (request): Promise<Static<typeof TodoObjectSchema>> => {
         return prisma.todo.create({
             data: {
                 title: request.body.title,
