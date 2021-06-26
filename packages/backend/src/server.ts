@@ -6,31 +6,31 @@ const server: FastifyInstance = Fastify({ logger: true });
 
 const prisma = new PrismaClient();
 
-const BodyScheme = Type.Object({
+const TodoPostBodyScheme = Type.Object({
     title: Type.String(),
 });
 
-type BodyType = Static<typeof BodyScheme>;
+type TodoPostBodyType = Static<typeof TodoPostBodyScheme>;
 
-const ResponseSchema = Type.Object({
+const TodoObjectSchema = Type.Object({
     id: Type.Number(),
     title: Type.String(),
 });
 
-type ResponseType = Static<typeof ResponseSchema>;
+type TodoPostResponseType = Static<typeof TodoObjectSchema>;
 
-const options: RouteShorthandOptions = {
+const TodoPostOptions: RouteShorthandOptions = {
     schema: {
-        body: BodyScheme,
+        body: TodoPostBodyScheme,
         response: {
-            200: ResponseSchema,
+            200: TodoObjectSchema,
         },
     },
 };
 
 server.post<{
-    Body: BodyType,
-}>("/todo", options, async (request): Promise<ResponseType> => {
+    Body: TodoPostBodyType,
+}>("/todo", TodoPostOptions, async (request): Promise<TodoPostResponseType> => {
     return await prisma.todo.create({
         data: {
             title: request.body.title,
@@ -38,12 +38,7 @@ server.post<{
     });
 });
 
-const TodoGetResponseSchema = Type.Array(
-    Type.Object({
-        id: Type.Number(),
-        title: Type.String(),
-    })
-);
+const TodoGetResponseSchema = Type.Array(TodoObjectSchema);
 
 type TodoGetResponseType = Static<typeof TodoGetResponseSchema>;
 
