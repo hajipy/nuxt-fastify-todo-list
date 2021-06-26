@@ -6,6 +6,9 @@ interface State {
 }
 
 const mutations: MutationTree<State> = {
+    clearTodos(state) {
+        state.todos.splice(0, state.todos.length);
+    },
     addTodos(state, todos: Todo[]) {
         state.todos.push(...todos);
     },

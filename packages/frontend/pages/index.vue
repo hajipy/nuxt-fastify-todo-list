@@ -31,6 +31,7 @@
             },
         },
         async fetch() {
+            this.$store.commit("clearTodos");
             const todoList = await this.$nuxt.context.$axios.$get("/api/todo");
             this.$store.commit("addTodos", todoList);
         },
