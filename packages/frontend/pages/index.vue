@@ -1,22 +1,21 @@
 <template>
     <ul>
-        <li v-for="todo in todoList">{{ todo }}</li>
+        <li v-for="todo in todos">{{ todo.title }}</li>
     </ul>
 </template>
 
 <script lang="ts">
     import Vue from "vue";
-    import { Context } from "@nuxt/types";
 
     export default Vue.extend({
         computed: {
-            todoList() {
-                return this.$store.state.todoList;
+            todos() {
+                return this.$store.state.todos;
             },
         },
-        async asyncData(context: Context) {
-            const todoList = await context.$axios.$get("http://localhost:3000/todo");
-            console.log(todoList);
+        async fetch() {
+            const todoList = await this.$nuxt.context.$axios.$get("http://localhost:3000/todo");
+            this.$store.commit("addTodos", todoList);
         },
     });
 </script>
