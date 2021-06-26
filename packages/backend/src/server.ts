@@ -29,7 +29,7 @@ server.post<{
         },
     },
     async (request): Promise<TodoPostResponseType> => {
-        return await prisma.todo.create({
+        return prisma.todo.create({
             data: {
                 title: request.body.title,
             },
@@ -49,7 +49,7 @@ server.get(
         },
     },
     async (): Promise<TodoGetResponseType> => {
-        return await prisma.todo.findMany({
+        return prisma.todo.findMany({
             orderBy: [
                 { id: "asc" },
             ],
