@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import Fastify, { FastifyInstance } from "fastify";
 import {
-    TodoGetResponse,
-    TodoGetResponseSchema,
-    TodoObject,
-    TodoObjectSchema,
-    TodoPostBody,
-    TodoPostBodyScheme,
+    ListTodoResponse,
+    ListTodoResponseSchema,
+    Todo,
+    TodoSchema,
+    AddTodoRequest,
+    AddTodoRequestScheme,
 } from "nuxt-fastify-todo-list-shared";
 
 const server: FastifyInstance = Fastify({ logger: true });
@@ -18,11 +18,11 @@ server.get(
     {
         schema: {
             response: {
-                200: TodoGetResponseSchema,
+                200: ListTodoResponseSchema,
             },
         },
     },
-    (): Promise<TodoGetResponse> => {
+    (): Promise<ListTodoResponse> => {
         return prisma.todo.findMany({
             orderBy: [
                 { id: "asc" },
@@ -32,18 +32,18 @@ server.get(
 );
 
 server.post<{
-    Body: TodoPostBody,
+    Body: AddTodoRequest,
 }>(
     "/todo",
     {
         schema: {
-            body: TodoPostBodyScheme,
+            body: AddTodoRequestScheme,
             response: {
-                200: TodoObjectSchema,
+                200: TodoSchema,
             },
         },
     },
-    (request): Promise<TodoObject> => {
+    (request): Promise<Todo> => {
         return prisma.todo.create({
             data: {
                 title: request.body.title,

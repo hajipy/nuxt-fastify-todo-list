@@ -1,15 +1,15 @@
 import { Static, Type } from "@sinclair/typebox";
 
-export const TodoObjectSchema = Type.Object({
+export const TodoSchema = Type.Object({
     id: Type.Number(),
     title: Type.String(),
 });
-export type TodoObject = Static<typeof TodoObjectSchema>;
+export type Todo = Static<typeof TodoSchema>;
 
-export const TodoGetResponseSchema = Type.Array(TodoObjectSchema);
-export type TodoGetResponse = Static<typeof TodoGetResponseSchema>;
+export const ListTodoResponseSchema = Type.Array(TodoSchema);
+export type ListTodoResponse = Static<typeof ListTodoResponseSchema>;
 
-export const TodoPostBodyScheme = Type.Object({
+export const AddTodoRequestScheme = Type.Object({
     title: Type.String(),
 });
-export type TodoPostBody = Static<typeof TodoPostBodyScheme>;
+export type AddTodoRequest = Static<typeof AddTodoRequestScheme>;
