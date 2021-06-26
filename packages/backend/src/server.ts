@@ -6,16 +6,16 @@ const server: FastifyInstance = Fastify({ logger: true });
 
 const prisma = new PrismaClient();
 
+const TodoObjectSchema = Type.Object({
+    id: Type.Number(),
+    title: Type.String(),
+});
+
 const TodoPostBodyScheme = Type.Object({
     title: Type.String(),
 });
 
 type TodoPostBodyType = Static<typeof TodoPostBodyScheme>;
-
-const TodoObjectSchema = Type.Object({
-    id: Type.Number(),
-    title: Type.String(),
-});
 
 type TodoPostResponseType = Static<typeof TodoObjectSchema>;
 
