@@ -1,4 +1,4 @@
-import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
+import Fastify, { FastifyInstance } from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { Type, Static } from "@sinclair/typebox";
 
@@ -19,44 +19,48 @@ const TodoObjectSchema = Type.Object({
 
 type TodoPostResponseType = Static<typeof TodoObjectSchema>;
 
-const TodoPostOptions: RouteShorthandOptions = {
-    schema: {
-        body: TodoPostBodyScheme,
-        response: {
-            200: TodoObjectSchema,
-        },
-    },
-};
-
 server.post<{
     Body: TodoPostBodyType,
-}>("/todo", TodoPostOptions, async (request): Promise<TodoPostResponseType> => {
-    return await prisma.todo.create({
-        data: {
-            title: request.body.title,
+}>(
+    "/todo",
+    {
+        schema: {
+            body: TodoPostBodyScheme,
+            response: {
+                200: TodoObjectSchema,
+            },
         },
-    });
-});
+    },
+    async (request): Promise<TodoPostResponseType> => {
+        return await prisma.todo.create({
+            data: {
+                title: request.body.title,
+            },
+        });
+    }
+);
 
 const TodoGetResponseSchema = Type.Array(TodoObjectSchema);
 
 type TodoGetResponseType = Static<typeof TodoGetResponseSchema>;
 
-const TodoGetOptions: RouteShorthandOptions = {
-    schema: {
-        response: {
-            200: TodoGetResponseSchema,
+server.get(
+    "/todo",
+    {
+        schema: {
+            response: {
+                200: TodoGetResponseSchema,
+            },
         },
     },
-};
-
-server.get("/todo", TodoGetOptions, async (): Promise<TodoGetResponseType> => {
-    return await prisma.todo.findMany({
-        orderBy: [
-            { id: "asc" },
-        ],
-    });
-});
+    async (): Promise<TodoGetResponseType> => {
+        return await prisma.todo.findMany({
+            orderBy: [
+                { id: "asc" },
+            ],
+        });
+    }
+);
 
 server.listen(3000)
     .catch((error) => {
