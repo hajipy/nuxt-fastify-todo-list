@@ -14,11 +14,8 @@ const TodoObjectSchema = Type.Object({
 const TodoPostBodyScheme = Type.Object({
     title: Type.String(),
 });
-
 type TodoPostBodyType = Static<typeof TodoPostBodyScheme>;
-
 type TodoPostResponseType = Static<typeof TodoObjectSchema>;
-
 server.post<{
     Body: TodoPostBodyType,
 }>(
@@ -41,9 +38,7 @@ server.post<{
 );
 
 const TodoGetResponseSchema = Type.Array(TodoObjectSchema);
-
 type TodoGetResponseType = Static<typeof TodoGetResponseSchema>;
-
 server.get(
     "/todo",
     {
