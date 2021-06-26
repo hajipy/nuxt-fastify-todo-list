@@ -1,6 +1,6 @@
-import Fastify, { FastifyInstance } from "fastify";
 import { PrismaClient } from "@prisma/client";
-import { Type, Static } from "@sinclair/typebox";
+import { Static, Type } from "@sinclair/typebox";
+import Fastify, { FastifyInstance } from "fastify";
 
 const server: FastifyInstance = Fastify({ logger: true });
 
