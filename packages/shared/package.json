@@ -1,0 +1,10 @@
+{
+  "name": "nuxt-fastify-todo-list-shared",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@sinclair/typebox": "^0.16.7"
+  }
+}

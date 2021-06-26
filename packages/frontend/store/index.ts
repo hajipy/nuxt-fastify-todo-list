@@ -1,11 +1,12 @@
 import { MutationTree } from "vuex";
+import { TodoObject } from "nuxt-fastify-todo-list-shared";
 
 interface State {
-    todos: Array<{ id: number; title: string; }>;
+    todos: TodoObject[];
 }
 
 const mutations: MutationTree<State> = {
-    addTodos(state, todos: Array<{ id: number; title: string; }>) {
+    addTodos(state, todos: TodoObject[]) {
         state.todos.push(...todos);
     },
 };

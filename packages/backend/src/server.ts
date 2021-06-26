@@ -1,17 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-import { Static, Type } from "@sinclair/typebox";
 import Fastify, { FastifyInstance } from "fastify";
+import {
+    TodoGetResponse,
+    TodoGetResponseSchema,
+    TodoObject,
+    TodoObjectSchema,
+    TodoPostBody,
+    TodoPostBodyScheme,
+} from "nuxt-fastify-todo-list-shared";
 
 const server: FastifyInstance = Fastify({ logger: true });
 
 const prisma = new PrismaClient();
 
-const TodoObjectSchema = Type.Object({
-    id: Type.Number(),
-    title: Type.String(),
-});
-
-const TodoGetResponseSchema = Type.Array(TodoObjectSchema);
 server.get(
     "/todo",
     {
@@ -21,7 +22,7 @@ server.get(
             },
         },
     },
-    (): Promise<Static<typeof TodoGetResponseSchema>> => {
+    (): Promise<TodoGetResponse> => {
         return prisma.todo.findMany({
             orderBy: [
                 { id: "asc" },
@@ -30,11 +31,8 @@ server.get(
     }
 );
 
-const TodoPostBodyScheme = Type.Object({
-    title: Type.String(),
-});
 server.post<{
-    Body: Static<typeof TodoPostBodyScheme>,
+    Body: TodoPostBody,
 }>(
     "/todo",
     {
@@ -45,7 +43,7 @@ server.post<{
             },
         },
     },
-    (request): Promise<Static<typeof TodoObjectSchema>> => {
+    (request): Promise<TodoObject> => {
         return prisma.todo.create({
             data: {
                 title: request.body.title,

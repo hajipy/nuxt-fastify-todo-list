@@ -4,7 +4,8 @@
   "private": true,
   "workspaces": [
     "packages/backend",
-    "packages/frontend"
+    "packages/frontend",
+    "packages/shared"
   ],
   "devDependencies": {
     "@types/node": "^12.20.14",
