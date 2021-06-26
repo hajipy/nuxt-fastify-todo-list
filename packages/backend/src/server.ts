@@ -38,6 +38,31 @@ server.post<{
     });
 });
 
+const TodoGetResponseSchema = Type.Array(
+    Type.Object({
+        id: Type.Number(),
+        title: Type.String(),
+    })
+);
+
+type TodoGetResponseType = Static<typeof TodoGetResponseSchema>;
+
+const TodoGetOptions: RouteShorthandOptions = {
+    schema: {
+        response: {
+            200: TodoGetResponseSchema,
+        },
+    },
+};
+
+server.get("/todo", TodoGetOptions, async (): Promise<TodoGetResponseType> => {
+    return await prisma.todo.findMany({
+        orderBy: [
+            { id: "asc" },
+        ],
+    });
+});
+
 server.listen(3000)
     .catch((error) => {
         server.log.error(error);
